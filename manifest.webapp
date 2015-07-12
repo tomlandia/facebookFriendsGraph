@@ -5,7 +5,7 @@
   "launch_path": "/index.html",
   "developer": {"name": "Thomas Schneider", "url": "http://thomasschneider.com/"},
   "icons" : {
-    "128": "icon.png"
+    "128": "icon.jpg"
   },
   "default_locale": "en"
 }
