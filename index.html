@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Friends graph</title>
+    <meta name="description" content="Graph visualization of your Facebook friends network.">
+    <script src="js/jquery.min.js"></script> 
+    <!--
+    <script src="js/sigma.min.js"></script>
+    <script src="js/sigma.layout.forceAtlas2.min.js"></script>
+    -->
+    <script src="js/d3.min.js"></script> 
+    <script src="js/jsnetworkx.js"></script>
+    <script src="js/facebookFriendsGraph.js"></script>
+    <style type="text/css">
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #graph {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      #friend-info {
+        position: absolute;
+        margin: 0;
+        width: 150px;
+        height: 150px;
+        text-align: center;
+        z-index: 99;
+      }
+      #progress-bar {
+        margin: 0;
+        height: 1.1em;
+        width: 0;
+        z-index: 100;
+        background-color: blue;
+        border-radius: 2px;
+      }
+      #friend-info button {
+        display: block;
+        margin: auto;
+      }
+      #friend-info a {
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 0.8em;
+        text-decoration: none;
+      }
+      #friend-info img {
+        width: 150px;
+        height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="friend-info">
+    <div id="progress-bar"></div>
+    <p><a href="#" target="_blank"></a></p>
+    <img src=""></img>
+    <button id="update">Update</button>
+  </div>
+  <div id="graph">
+  </div>
+  </body>
+</html>

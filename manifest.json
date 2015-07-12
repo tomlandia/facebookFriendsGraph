@@ -1,0 +1,11 @@
+{
+  "name": "Facebook Friends Graph",
+  "description": "Graph visualization of your Facebook friend network.",
+  "version": "1.0.0",
+  "launch_path": "/index.html",
+  "developer": {"name": "Thomas Schneider", "url": "http://thomasschneider.com/"},
+  "icons" : {
+    "128": "icon.png"
+  },
+  "default_locale": "en"
+}
