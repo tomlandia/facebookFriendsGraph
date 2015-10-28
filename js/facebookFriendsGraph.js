@@ -173,7 +173,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 if(cache.friends) deferred.resolve(cache.friends);
                 else $.get('http://m.facebook.com/me').then(function(html) {
-                    var friendsListHref = $(html).find('a[href*="v=friends"]').attr('href');
+                    var friendsListHref = $(html).find('#m-timeline-cover-section a[href*="friends"]').attr('href');
                     var url = 'https://m.facebook.com' + friendsListHref;
                     if(friendsListHref)
                         fetchFriendsList(url).then(function(friends) { 
