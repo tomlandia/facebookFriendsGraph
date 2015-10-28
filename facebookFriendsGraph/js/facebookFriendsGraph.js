@@ -131,12 +131,11 @@ window.addEventListener('DOMContentLoaded', function() {
         var parseFriendsListPage = function(html) {
             return $(html).find('#root table').map(function() {
                 var table = $(this); //Yeah $.map is weird...
-                var link = table.find('a'), image = table.find('img');
-                //TODO: handle profiles with numerical ID's only
-                if((image.length == 0) || link.attr('href').indexOf('/profile.php') == 0) return;
+                var link = table.find('a'), href = link.attr('href'), image = table.find('img');
+                if(image.length == 0) return;
                 return {
                     name: link.text(),
-                    id: link.attr('href').substring(1).split('?')[0],
+                    id: href.startsWith('/profile.php') ? parseInt(href.split('id=')[1]) : href.substring(1).split('?')[0],
                     thumbnailUrl: image.attr('src')
                 };
             }).get();
@@ -196,7 +195,10 @@ window.addEventListener('DOMContentLoaded', function() {
                 if(cache.mutualFriendsIdsOf[friend.id])
                     deferred.resolve(cache.mutualFriendsIdsOf[friend.id]);
                 else {
-                    var url = 'https://m.facebook.com/' + friend.id + '?v=friends&mutual=1';
+                    if(typeof friend.id === 'number')
+                      var url = 'https://m.facebook.com/profile.php?id=' + friend.id + '&v=friends&mutual=1';
+                    else
+                      var url = 'https://m.facebook.com/' + friend.id + '?v=friends&mutual=1';
                     fetchFriendsList(url).then(function(mutualFriends) {
                         mutualFriendsIds = mutualFriends.map(function(f) {return f.id});
                         cache.mutualFriendsIdsOf[friend.id] = mutualFriendsIds;
