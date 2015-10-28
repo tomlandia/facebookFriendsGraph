@@ -1,0 +1,14 @@
+{
+
+  "title": "facebookFriendsGraph",
+  "icon": "icons/mac.icns",
+  "icon-size": 128,
+  "contents": [
+
+    { "x": 452, "y": 220, "type": "link", "path": "/Applications" },
+
+    { "x": 145, "y": 220, "type": "file", "path": "./build/facebookFriendsGraph/osx64/Fuckr.app" }
+
+  ]
+
+}
