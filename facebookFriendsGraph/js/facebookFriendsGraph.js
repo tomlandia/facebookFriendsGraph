@@ -52,7 +52,6 @@ window.addEventListener('DOMContentLoaded', function() {
                 s.refresh();
             },
             addFriendships: function(friendships) {
-                console.debug(friendships);
                 friendships.forEach(function(friendship) {
                     var ids = friendship.split('/')
                     s.graph.addEdge({
@@ -217,28 +216,28 @@ window.addEventListener('DOMContentLoaded', function() {
 
     facebook.fetchFriends().then(function(friends) {
         graph.addFriends(friends);
-        var friendships = [], fetched = 0, progressBar = document.getElementById('progress-bar');
+        var friendships = [], fetched = 0, i = 0, progressBar = document.getElementById('progress-bar');
         friends.forEach(function(friend) {
-            facebook.fetchMutualFriendsIdsOf(friend).then(function(mutualFriendsIds) {
-                for(var i = 0; i < mutualFriendsIds.length; i++) {
-                    var friendship = [friend.id, mutualFriendsIds[i]].sort().join('/');
-                    if(friendships.indexOf(friendship) == -1) friendships.push(friendship);
-                }
-                fetched += 1;
-                progressBar.style.width = Math.round(100 * fetched / friends.length) + '%';
-                console.log("fetched " + fetched);
-                if(fetched == friends.length) {
-                    graph.addFriendships(friendships);
-                    progressBar.remove();
-                }
-            });
+            setTimeout(function() {
+                facebook.fetchMutualFriendsIdsOf(friend).then(function(mutualFriendsIds) {
+                    for(var i = 0; i < mutualFriendsIds.length; i++) {
+                        var friendship = [friend.id, mutualFriendsIds[i]].sort().join('/');
+                        if(friendships.indexOf(friendship) == -1) friendships.push(friendship);
+                    }
+                    fetched += 1;
+                    progressBar.style.width = Math.round(100 * fetched / friends.length) + '%';
+                    if(fetched == friends.length) {
+                        graph.addFriendships(friendships);
+                        progressBar.remove();
+                    }
+                });
+            }, 30 * i++);
         });
     }, function(message) {
         var loginUrl = 'https://m.facebook.com/login';
         document.body.innerHTML = "<iframe id='iframe' src='"+loginUrl+"' width='100%' height='600px'></iframe>";
         var iframe = document.getElementById("iframe");
         setInterval(function() {
-            console.log(iframe.contentWindow.location.href)
             if(! iframe.contentWindow.location.href.startswith(loginUrl)) location.reload();
         }, 500);
     });
