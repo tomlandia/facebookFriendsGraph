@@ -7,7 +7,9 @@ window.addEventListener('DOMContentLoaded', function() {
     });
     //When node hovered
     var updateFriendInfo = function(friend) {
-        $('#friend-info a').attr('href', 'https://m.facebook.com/' + friend.id).text(friend.name);
+        //compatible with both normal browser and nw-utility.js
+        var hackishHref = 'javascript:window.open("' + 'https://facebook.com/' + friend.id + '", "_blank")';
+        $('#friend-info a').attr('href', hackishHref).text(friend.name);
         $('#friend-info img').attr('src', friend.thumbnailUrl);
     };
     //When node clicked
@@ -77,7 +79,7 @@ window.addEventListener('DOMContentLoaded', function() {
         var graph = window.G = new jsnx.Graph();
         //As of JSNetworkX v0.3.3, OptBind option (draw as you add) crashes JSNetworkx if you add too many features at the same time
         var drawAndBindEvents = function() {
-            jsnx.draw(graph, {
+            var forceLayout = jsnx.draw(graph, {
                 element: '#graph',
                 d3: d3,
                 nodeAttr: {
@@ -92,6 +94,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     fill: '#999'
                 }
             }, false);
+            setTimeout(forceLayout.stop, 20000);
 
             d3.selectAll('.node')
                 .on('click', function(d) { openProfileInTab(d.data.id); })
@@ -223,6 +226,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
                 fetched += 1;
                 progressBar.style.width = Math.round(100 * fetched / friends.length) + '%';
+                console.log("fetched " + fetched);
                 if(fetched == friends.length) {
                     graph.addFriendships(friendships);
                     progressBar.remove();
@@ -230,7 +234,12 @@ window.addEventListener('DOMContentLoaded', function() {
             });
         });
     }, function(message) {
-        alert(message);
-        window.location.href = 'https://facebook.com/';
+        var loginUrl = 'https://m.facebook.com/login';
+        document.body.innerHTML = "<iframe id='iframe' src='"+loginUrl+"' width='100%' height='600px'></iframe>";
+        var iframe = document.getElementById("iframe");
+        setInterval(function() {
+            console.log(iframe.contentWindow.location.href)
+            if(! iframe.contentWindow.location.href.startswith(loginUrl)) location.reload();
+        }, 500);
     });
 });

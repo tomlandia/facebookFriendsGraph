@@ -1,4 +1,5 @@
 var NwBuilder = require('node-webkit-builder');
+
 var nw = new NwBuilder({
   files: 'facebookFriendsGraph/**',
   platforms: ['win32', 'osx64', 'linux64'],

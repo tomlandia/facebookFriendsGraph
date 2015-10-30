@@ -1,11 +1,11 @@
 {
-  "name": "Facebook Friends Graph",
+  "name": "Facebook Friends Graph9",
   "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:41.0) Gecko/20100101 Firefox/41.0",
   "version": "1.0.0",
   "main": "index.html",
   "window": {
-    "toolbar": true,
-    "resizable": true,
+    "toolbar": false,
+    "resizable": false,
     "position": "center",
     "width": 1024,
     "height": 768
