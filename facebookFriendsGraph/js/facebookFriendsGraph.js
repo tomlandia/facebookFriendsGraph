@@ -231,7 +231,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         progressBar.remove();
                     }
                 });
-            }, 30 * i++);
+            }, 5 * i++);
         });
     }, function(message) {
         var loginUrl = 'https://m.facebook.com/login';
